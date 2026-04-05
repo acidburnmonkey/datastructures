@@ -4,26 +4,26 @@ import (
 	"errors"
 )
 
-// Stack a Stack with no size
+// Stack -> creates a Stack with no size
 type Stack[T any] struct {
-	Capasity  int
+	Capacity  int
 	Container []T
 }
 
-// StackFixed creates Stack with a fixed size
+// StackFixed -> creates Stack with a fixed size
 func StackFixed[T any](value int) *Stack[T] {
 
 	return &Stack[T]{
-		Capasity:  value,
+		Capacity:  value,
 		Container: make([]T, 0, value),
 	}
 
 }
 
-// Push Appends value to stack returns error
-// If using StackFixed errors when over capasity
+// Push -> Appends value to stack returns error
+// If using StackFixed errors when over capacity
 func (s *Stack[T]) Push(value T) error {
-	if s.Capasity > 0 && (len(s.Container) >= s.Capasity) {
+	if s.Capacity > 0 && (len(s.Container) >= s.Capacity) {
 		return errors.New("Error max capasity exeded")
 	}
 
@@ -31,7 +31,7 @@ func (s *Stack[T]) Push(value T) error {
 	return nil
 }
 
-// Pop returns value,error and removes last index
+// Pop -> returns value,error and removes last index
 func (s *Stack[T]) Pop() (T, error) {
 
 	var zero T
@@ -46,17 +46,17 @@ func (s *Stack[T]) Pop() (T, error) {
 	return last, nil
 }
 
-// Clear clears the stack
+// Clear -> clears the stack
 func (s *Stack[T]) Clear() {
 	s.Container = []T{}
 }
 
-// Peek returns top item
+// Peek -> returns top item
 func (s *Stack[T]) Peek() T {
 	return s.Container[len(s.Container)-1]
 }
 
-// First returns bottom item
+// First -> returns bottom item
 func (s *Stack[T]) First() T {
 	return s.Container[0]
 }
