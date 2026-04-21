@@ -1,4 +1,4 @@
-package stack
+package linear
 
 import (
 	"testing"
@@ -13,5 +13,4 @@ func TestPush(t *testing.T) {
 	if len(s.Container) != 3 {
 		t.Errorf("expected 2 items, got %d", len(s.Container))
 	}
-
 }

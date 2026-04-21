@@ -1,4 +1,4 @@
-package stack
+package linear
 
 import (
 	"errors"
@@ -12,12 +12,10 @@ type Stack[T any] struct {
 
 // StackFixed -> creates Stack with a fixed size
 func StackFixed[T any](value int) *Stack[T] {
-
 	return &Stack[T]{
 		Capacity:  value,
 		Container: make([]T, 0, value),
 	}
-
 }
 
 // Push -> Appends value to stack returns error
@@ -33,7 +31,6 @@ func (s *Stack[T]) Push(value T) error {
 
 // Pop -> returns value,error and removes last index
 func (s *Stack[T]) Pop() (T, error) {
-
 	var zero T
 
 	if len(s.Container) <= 0 {
