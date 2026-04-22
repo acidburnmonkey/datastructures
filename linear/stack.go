@@ -6,26 +6,26 @@ import (
 
 // Stack -> creates a Stack with no size
 type Stack[T any] struct {
-	Capacity  int
-	Container []T
+	capacity  int
+	container []T
 }
 
 // StackFixed -> creates Stack with a fixed size
 func StackFixed[T any](value int) *Stack[T] {
 	return &Stack[T]{
-		Capacity:  value,
-		Container: make([]T, 0, value),
+		capacity:  value,
+		container: make([]T, 0, value),
 	}
 }
 
 // Push -> Appends value to stack returns error
 // If using StackFixed errors when over capacity
 func (s *Stack[T]) Push(value T) error {
-	if s.Capacity > 0 && (len(s.Container) >= s.Capacity) {
+	if s.capacity > 0 && (len(s.container) >= s.capacity) {
 		return errors.New("Error max capasity exeded")
 	}
 
-	s.Container = append(s.Container, value)
+	s.container = append(s.container, value)
 	return nil
 }
 
@@ -33,27 +33,32 @@ func (s *Stack[T]) Push(value T) error {
 func (s *Stack[T]) Pop() (T, error) {
 	var zero T
 
-	if len(s.Container) <= 0 {
+	if len(s.container) <= 0 {
 		return zero, errors.New("Error Empty Stack")
 	}
 
-	last := s.Container[len(s.Container)-1]
-	s.Container = s.Container[:len(s.Container)-1]
+	last := s.container[len(s.container)-1]
+	s.container = s.container[:len(s.container)-1]
 
 	return last, nil
 }
 
 // Clear -> clears the stack
 func (s *Stack[T]) Clear() {
-	s.Container = []T{}
+	s.container = []T{}
 }
 
 // Peek -> returns top item
 func (s *Stack[T]) Peek() T {
-	return s.Container[len(s.Container)-1]
+	return s.container[len(s.container)-1]
 }
 
 // First -> returns bottom item
 func (s *Stack[T]) First() T {
-	return s.Container[0]
+	return s.container[0]
+}
+
+// Size -> returns number of items in stack
+func (s *Stack[T]) Size() int {
+	return len(s.container)
 }
