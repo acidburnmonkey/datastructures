@@ -1,4 +1,4 @@
-# DS
+# Data Structures & Algorithms in Go
 
 ## Linear
 
@@ -8,13 +8,35 @@
 - [ ] Circular Buffer
 - [ ] Deque
 
-## Graph
+## Tree — hierarchical, parent/child relationships
 
-## Tree
+- [ ] Binary Tree
+- [ ] Binary Search Tree
+- [ ] AVL Tree
+- [ ] Heap (min/max)
+- [ ] Trie
+
+## Graph — nodes connected by edges, no strict hierarchy
+
+- [ ] Directed
+- [ ] Undirected
+- [ ] Weighted
+
+## Hash Based — key/value
+
+- [ ] Hash Map
+- [ ] Hash Set
+
+# Each category solves different problems:
+
+- Linear — ordered data, undo/redo, scheduling
+- Tree — searching, sorting, hierarchical data like file systems
+- Graph — networks, maps, social connections, dependencies
+- Hash — fast lookups, caching, counting
+- Set — membership testing, deduplication
 
 # Documentation
 
 ```bash
 go doc -all ./linear | bat -l go
-
 ```
