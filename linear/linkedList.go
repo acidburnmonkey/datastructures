@@ -16,6 +16,11 @@ type LinkedList[T any] struct {
 	length uint8
 }
 
+// NewLinkedList() -> Creates a linked list NewLinkedList[Type]()
+func NewLinkedList[T any]() *LinkedList[T] {
+	return &LinkedList[T]{}
+}
+
 // InsertAtHead() -> inserts data and sets it as head
 func (ll *LinkedList[T]) InsertAtHead(data T) {
 	newNode := &Node[T]{data: data}
