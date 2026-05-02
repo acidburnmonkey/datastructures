@@ -5,7 +5,7 @@
 - [x] Stack
 - [x] Queue
 - [x] Linked List
-- [ ] Circular Buffer
+- [x] Circular Buffer
 - [ ] Deque
 
 ## Tree — hierarchical, parent/child relationships
