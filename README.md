@@ -4,9 +4,9 @@
 
 - [x] Stack
 - [x] Queue
-- [x] Linked List
+- [x] Double Linked List
 - [x] Circular Buffer
-- [ ] Deque
+- [ ] Deque (segmented array), ⛔ Not possible in Go
 
 ## Tree — hierarchical, parent/child relationships
 
