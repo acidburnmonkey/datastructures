@@ -27,6 +27,10 @@
 - [ ] Hash Map
 - [ ] Hash Set
 
+# Algorithms ω
+
+- [x] Kadane's Algorithm
+
 # Each category solves different problems:
 
 - Linear — ordered data, undo/redo, scheduling
