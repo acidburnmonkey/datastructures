@@ -15,9 +15,9 @@ func TestQueueWithMaps(t *testing.T) {
 	m2 := map[string]int{"b": 2, "c": 3}
 	var nilMap map[string]int
 
-	q.Add(m1)
-	q.Add(m2)
-	q.Add(nilMap)
+	q.Push(m1)
+	q.Push(m2)
+	q.Push(nilMap)
 
 	if q.Size() != 3 {
 		t.Fatalf("expected size 3, got %d", q.Size())
@@ -28,7 +28,7 @@ func TestQueueWithMaps(t *testing.T) {
 		t.Errorf("Peek returned wrong map: %v", got)
 	}
 
-	pulled, err := q.Pull()
+	pulled, err := q.Pop()
 	if err != nil || pulled["a"] != 1 {
 		t.Errorf("Pull returned wrong map: %v err: %v", pulled, err)
 	}
@@ -42,7 +42,7 @@ func TestQueueMapMutationAfterEnqueue(t *testing.T) {
 	q := linear.QueueFixed[map[string]int](2)
 
 	m := map[string]int{"x": 10}
-	q.Add(m)
+	q.Push(m)
 
 	// mutate original map after enqueue — queue holds a reference
 	m["x"] = 999
@@ -57,9 +57,9 @@ func TestQueueMapMutationAfterEnqueue(t *testing.T) {
 
 func TestQueueMapOverCapacity(t *testing.T) {
 	q := linear.QueueFixed[map[string]int](1)
-	q.Add(map[string]int{"a": 1})
+	q.Push(map[string]int{"a": 1})
 
-	err := q.Add(map[string]int{"b": 2})
+	err := q.Push(map[string]int{"b": 2})
 	if err == nil {
 		t.Error("expected error when adding to full map queue, got nil")
 	}
@@ -75,15 +75,15 @@ type Person struct {
 func TestQueueWithStructs(t *testing.T) {
 	q := linear.QueueFixed[Person](3)
 
-	q.Add(Person{"Alice", 30})
-	q.Add(Person{"Bob", 25})
-	q.Add(Person{}) // zero value struct
+	q.Push(Person{"Alice", 30})
+	q.Push(Person{"Bob", 25})
+	q.Push(Person{}) // zero value struct
 
 	if q.Size() != 3 {
 		t.Fatalf("expected size 3, got %d", q.Size())
 	}
 
-	first, err := q.Pull()
+	first, err := q.Pop()
 	if err != nil || first.Name != "Alice" {
 		t.Errorf("expected Alice, got %v", first)
 	}
@@ -96,10 +96,10 @@ func TestQueueWithStructs(t *testing.T) {
 
 func TestQueueStructOverCapacity(t *testing.T) {
 	q := linear.QueueFixed[Person](2)
-	q.Add(Person{"A", 1})
-	q.Add(Person{"B", 2})
+	q.Push(Person{"A", 1})
+	q.Push(Person{"B", 2})
 
-	err := q.Add(Person{"C", 3})
+	err := q.Push(Person{"C", 3})
 	if err == nil {
 		t.Error("expected error adding struct beyond capacity, got nil")
 	}
@@ -113,9 +113,9 @@ func TestQueueWithPointers(t *testing.T) {
 	p1 := &Person{"Alice", 30}
 	p2 := &Person{"Bob", 25}
 
-	q.Add(p1)
-	q.Add(p2)
-	q.Add(nil) // nil pointer
+	q.Push(p1)
+	q.Push(p2)
+	q.Push(nil) // nil pointer
 
 	if q.Size() != 3 {
 		t.Fatalf("expected size 3, got %d", q.Size())
@@ -129,9 +129,9 @@ func TestQueueWithPointers(t *testing.T) {
 
 func TestQueueNilPointerPull(t *testing.T) {
 	q := linear.QueueFixed[*Person](2)
-	q.Add(nil)
+	q.Push(nil)
 
-	got, err := q.Pull()
+	got, err := q.Pop()
 	if err != nil {
 		t.Fatalf("unexpected error pulling nil pointer: %v", err)
 	}
@@ -144,7 +144,7 @@ func TestQueuePointerMutationAfterEnqueue(t *testing.T) {
 	q := linear.QueueFixed[*Person](1)
 
 	p := &Person{"Alice", 30}
-	q.Add(p)
+	q.Push(p)
 
 	p.Name = "Mutated"
 
@@ -159,15 +159,15 @@ func TestQueuePointerMutationAfterEnqueue(t *testing.T) {
 func TestQueueWithSlices(t *testing.T) {
 	q := linear.QueueFixed[[]int](3)
 
-	q.Add([]int{1, 2, 3})
-	q.Add([]int{}) // empty slice
-	q.Add(nil)     // nil slice
+	q.Push([]int{1, 2, 3})
+	q.Push([]int{}) // empty slice
+	q.Push(nil)     // nil slice
 
 	if q.Size() != 3 {
 		t.Fatalf("expected size 3, got %d", q.Size())
 	}
 
-	first, err := q.Pull()
+	first, err := q.Pop()
 	if err != nil || len(first) != 3 || first[0] != 1 {
 		t.Errorf("unexpected first slice: %v", first)
 	}
@@ -177,7 +177,7 @@ func TestQueueSliceMutationAfterEnqueue(t *testing.T) {
 	q := linear.QueueFixed[[]int](1)
 
 	s := []int{1, 2, 3}
-	q.Add(s)
+	q.Push(s)
 
 	s[0] = 999
 
@@ -191,9 +191,9 @@ func TestQueueSliceMutationAfterEnqueue(t *testing.T) {
 
 func TestQueueSliceOverCapacity(t *testing.T) {
 	q := linear.QueueFixed[[]int](1)
-	q.Add([]int{1})
+	q.Push([]int{1})
 
-	err := q.Add([]int{2})
+	err := q.Push([]int{2})
 	if err == nil {
 		t.Error("expected error adding slice beyond capacity, got nil")
 	}
@@ -203,7 +203,7 @@ func TestQueueSliceOverCapacity(t *testing.T) {
 
 func TestQueuePullEmptyMap(t *testing.T) {
 	q := linear.QueueFixed[map[string]int](2)
-	_, err := q.Pull()
+	_, err := q.Pop()
 	if err == nil {
 		t.Error("expected error pulling from empty map queue")
 	}
@@ -211,7 +211,7 @@ func TestQueuePullEmptyMap(t *testing.T) {
 
 func TestQueuePullEmptyPointer(t *testing.T) {
 	q := linear.QueueFixed[*Person](2)
-	_, err := q.Pull()
+	_, err := q.Pop()
 	if err == nil {
 		t.Error("expected error pulling from empty pointer queue")
 	}
@@ -219,7 +219,7 @@ func TestQueuePullEmptyPointer(t *testing.T) {
 
 func TestQueuePullEmptySlice(t *testing.T) {
 	q := linear.QueueFixed[[]int](2)
-	_, err := q.Pull()
+	_, err := q.Pop()
 	if err == nil {
 		t.Error("expected error pulling from empty slice queue")
 	}

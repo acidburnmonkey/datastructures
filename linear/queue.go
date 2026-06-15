@@ -19,8 +19,8 @@ func QueueFixed[T any](value uint8) *Queue[T] {
 	}
 }
 
-// Add() -> enqeues an item, returns err if queue if full
-func (q *Queue[T]) Add(item T) error {
+// Push() -> enqeues an item, returns err if queue if full
+func (q *Queue[T]) Push(item T) error {
 	if q.capacity > 0 && q.capacity <= uint8(len(q.container)) {
 		return errors.New("Queue full")
 	}
@@ -39,8 +39,8 @@ func (q *Queue[T]) Peek() (T, bool) {
 	return q.container[0], true
 }
 
-// Pull() -> returns the upcoming item and removes it from Queue
-func (q *Queue[T]) Pull() (T, error) {
+// Pop() -> returns the upcoming item and removes it from Queue
+func (q *Queue[T]) Pop() (T, error) {
 	if len(q.container) <= 0 {
 		var zero T
 		return zero, errors.New("Queue is empty")
