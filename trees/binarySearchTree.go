@@ -13,19 +13,19 @@ type NumericTypes interface {
 }
 
 type Node[T NumericTypes] struct {
-	left  *Node[T]
-	right *Node[T]
+	Left  *Node[T]
+	Right *Node[T]
 	Data  T
 }
 
 // BSTree() -> Binary search tree, &BSTree[type] , must be in NumericTypes ;
 type BSTree[T NumericTypes] struct {
-	root *Node[T]
+	Root *Node[T]
 }
 
 // Insert() -> Inserts Node
 func (tree *BSTree[T]) Insert(n T) {
-	tree.root = insertHelper(tree.root, n)
+	tree.Root = insertHelper(tree.Root, n)
 }
 
 func insertHelper[T NumericTypes](node *Node[T], n T) *Node[T] {
@@ -35,10 +35,10 @@ func insertHelper[T NumericTypes](node *Node[T], n T) *Node[T] {
 
 	switch {
 	case n < node.Data:
-		node.left = insertHelper(node.left, n)
+		node.Left = insertHelper(node.Left, n)
 
 	case n > node.Data:
-		node.right = insertHelper(node.right, n)
+		node.Right = insertHelper(node.Right, n)
 	}
 
 	return node
@@ -46,7 +46,7 @@ func insertHelper[T NumericTypes](node *Node[T], n T) *Node[T] {
 
 // Display() -> prints nodes :: recursive implementation
 func (t *BSTree[T]) Display() {
-	displayHelper(t.root)
+	displayHelper(t.Root)
 }
 
 func displayHelper[T NumericTypes](node *Node[T]) {
@@ -55,32 +55,32 @@ func displayHelper[T NumericTypes](node *Node[T]) {
 	}
 
 	fmt.Println("node:", node.Data)
-	if node.left != nil {
-		fmt.Println("  left child:", node.left.Data)
+	if node.Left != nil {
+		fmt.Println("  left child:", node.Left.Data)
 	}
-	if node.right != nil {
-		fmt.Println("  right child:", node.right.Data)
+	if node.Right != nil {
+		fmt.Println("  right child:", node.Right.Data)
 	}
 
-	displayHelper(node.left)
-	displayHelper(node.right)
+	displayHelper(node.Left)
+	displayHelper(node.Right)
 }
 
 // Find() => binary search implementation returns a pointer to the node and true if val is found in tree, else returns zero struct and false
 func (t BSTree[T]) Find(val T) (*Node[T], bool) {
 	zero := &Node[T]{}
 
-	if t.root == nil {
+	if t.Root == nil {
 		return zero, false
 	}
 
-	for t.root != nil {
-		if val == t.root.Data {
-			return t.root, true
-		} else if val < t.root.Data {
-			t.root = t.root.left
-		} else if val > t.root.Data {
-			t.root = t.root.right
+	for t.Root != nil {
+		if val == t.Root.Data {
+			return t.Root, true
+		} else if val < t.Root.Data {
+			t.Root = t.Root.Left
+		} else if val > t.Root.Data {
+			t.Root = t.Root.Right
 		}
 	}
 
