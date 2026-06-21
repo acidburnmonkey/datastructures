@@ -50,3 +50,7 @@ go doc -all ./trees | bat -l go
 ```bash
 go test ./tests/...
 ```
+
+## Disclosure
+
+Unit tests and examples.md written by claude
