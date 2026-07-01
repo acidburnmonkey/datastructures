@@ -53,4 +53,4 @@ go test ./tests/...
 
 ## Disclosure
 
-Unit tests and examples.md written by claude
+Unit tests and explanations written by claude
